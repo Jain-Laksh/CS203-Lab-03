@@ -1,0 +1,157 @@
+    1  clear
+    2  history
+    3  clear
+    4  mkdir -p ~/python_build && cd ~/python_build
+    5  wget https://www.python.org/ftp/python/3.10.0/Python-3.10.0.tgz
+    6  tar -xzf Python-3.10.0.tgz
+    7  cd Python-3.10.0
+    8  ./configure --enable-optimizations --prefix=$HOME/.local/python-3.10
+    9  sudo apt install build-essential
+   10  ls
+   11  python
+   12  python3
+   13  make -j $(nproc) && make install
+   14  source ~/.bashrc
+   15  python3.10 --version
+   16  pip
+   17  pip3.10
+   18  python3.10 -m pip --version
+   19  curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+   20  python3.10 get-pip.py --user
+   21  mkdir -p ~/zlib_build && cd ~/zlib_build
+   22  wget https://zlib.net/zlib-1.2.13.tar.gz
+   23  wget http://www.zlib.net/fossils/zlib-1.2.13.tar.gz
+   24  ls -l zlib-1.2.13.tar.gz
+   25  tar -xzf zlib-1.2.13.tar.gz
+   26  cd zlib-1.2.13
+   27  ./configure --prefix=$HOME/.local/zlib
+   28  make && make install
+   29  cd ~/python_build/Python-3.10.0
+   30  make clean
+   31  export CPPFLAGS="-I$HOME/.local/zlib/include"
+   32  export LDFLAGS="-L$HOME/.local/zlib/lib"
+   33  ./configure   --enable-optimizations   --prefix=$HOME/.local/python-3.10   --with-zlib=$HOME/.local/zlib
+   34  make -j $(nproc) && make install
+   35  pip
+   36  pip3.10
+   37  pip3.10 -v
+   38  pip3.10 --version
+   39  cd ..
+   40  ls
+   41  cd testing_label_studios
+   42  mkdir testing_label_studios
+   43  cd testing_label_studios
+   44  python3.10 -m venv venv
+   45  ls venv/
+   46  ls venv/bin
+   47  source venv/bin/activate
+   48  pip3.10 install label-studio
+   49  mkdir -p ~/openssl_build && cd ~/openssl_build
+   50  wget https://www.openssl.org/source/openssl-1.1.1w.tar.gz
+   51  tar -xzf openssl-1.1.1w.tar.gz
+   52  cd openssl-1.1.1w
+   53  ./config --prefix=$HOME/.local/openssl --openssldir=$HOME/.local/openssl
+   54  make && make install
+   55  cd ~/python_build/Python-3.10.0
+   56  export CPPFLAGS="-I$HOME/.local/openssl/include"
+   57  export LDFLAGS="-L$HOME/.local/openssl/lib"
+   58  export LD_LIBRARY_PATH="$HOME/.local/openssl/lib:$LD_LIBRARY_PATH"
+   59  ./configure   --enable-optimizations   --prefix=$HOME/.local/python-3.10   --with-openssl="$HOME/.local/openssl"
+   60  make -j $(nproc) && make install
+   61  echo 'export PATH="$HOME/.local/python-3.10/bin:$PATH"' >> ~/.bashrc
+   62  echo 'export LD_LIBRARY_PATH="$HOME/.local/openssl/lib:$LD_LIBRARY_PATH"' >> ~/.bashrc
+   63  source ~/.bashrc
+   64  python3.10 -c "import ssl; print(ssl.OPENSSL_VERSION)"
+   65  python3.10 -m pip install label-studio --user
+   66  git clone https://github.com/HumanSignal/label-studio.git
+   67  cd label-studio
+   68  pip install poetry
+   69  poetry install
+   70  poetry run python label_studio/manage.py migrate
+   71  poetry run python label_studio/manage.py collectstatic
+   72  poetry run python label_studio/manage.py runserver
+   73  ls ~/.local/libffi/lib
+   74  mkdir -p ~/libffi_build && cd ~/libffi_build
+   75  wget https://github.com/libffi/libffi/releases/download/v3.4.6/libffi-3.4.6.tar.gz
+   76  tar -xzf libffi-3.4.6.tar.gz
+   77  cd libffi-3.4.6
+   78  ./configure --prefix=$HOME/.local/libffi
+   79  make && make install
+   80  ls ~/.local/libffi/lib
+   81  ls ~/.local/libffi/lib64
+   82  cd ~/python_build/Python-3.10.0
+   83  make clean
+   84  export CPPFLAGS="-I$HOME/.local/libffi/include"
+   85  export LDFLAGS="-L$HOME/.local/libffi/lib -L$HOME/.local/libffi/lib64"
+   86  export LD_LIBRARY_PATH="$HOME/.local/libffi/lib:$HOME/.local/libffi/lib64:$LD_LIBRARY_PATH"
+   87  ./configure   --enable-optimizations   --prefix=$HOME/.local/python-3.10   --with-openssl="$HOME/.local/openssl"   --with-system-ffi
+   88  make -j $(nproc) && make install
+   89  wget https://zlib.net/zlib-1.2.13.tar.gz
+   90  tar -xvf zlib-1.2.13.tar.gz
+   91  cd zlib-1.2.13
+   92  wget https://zlib.net/zlib-1.2.13.tar.gz
+   93  cd zlib-1.2.13
+   94  tar -xvf zlib-1.2.13.tar.gz
+   95  cd zlib-1.2.13
+   96  ls
+   97  wget https://zlib.net/zlib-1.2.13.tar.gz
+   98  wget http://www.zlib.net/fossils/zlib-1.2.13.tar.gz
+   99  ls -l zlib-1.2.13.tar.gz
+  100  tar -xvf zlib-1.2.13.tar.gz
+  101  cd zlib-1.2.13
+  102  ./configure --prefix=$HOME/.local/zlib
+  103  make
+  104  make install
+  105  echo 'export CFLAGS="-I$HOME/.local/zlib/include"' >> ~/.bashrc
+  106  echo 'export LDFLAGS="-L$HOME/.local/zlib/lib"' >> ~/.bashrc
+  107  echo 'export LD_LIBRARY_PATH="$HOME/.local/zlib/lib:$LD_LIBRARY_PATH"' >> ~/.bashrc
+  108  source ~/.bashrc
+  109  echo 'export PATH="$HOME/.local/python-3.10/bin:$PATH"' >> ~/.bashrc
+  110  source ~/.bashrc
+  111  cd /home/ty777/python_build/Python-3.10.0
+  112  make clean
+  113  ./configure   --prefix=$HOME/.local/python-3.10   --enable-optimizations   --with-ensurepip=install   --with-zlib=$HOME/.local/zlib
+  114  make -j$(nproc)
+  115  make install
+  116  $HOME/.local/python-3.10/bin/python3.10 -c "import zlib; print(zlib.__version__)"
+  117  pip
+  118  pip3.10
+  119  pip3.10 install --upgrade label-studio
+  120  label-studio start .
+  121  wget https://www.sqlite.org/2023/sqlite-autoconf-3430200.tar.gz
+  122  tar -xvf sqlite-autoconf-3430200.tar.gz
+  123  cd sqlite-autoconf-3430200
+  124  ./configure --prefix=$HOME/.local/sqlite3
+  125  make
+  126  make install
+  127  export CPPFLAGS="-I$HOME/.local/sqlite3/include"
+  128  echo 'export LDFLAGS="-L$HOME/.local/sqlite3/lib"' >> ~/.bashrc
+  129  echo 'export LD_LIBRARY_PATH="$HOME/.local/sqlite3/lib:$LD_LIBRARY_PATH"' >> ~/.bashrc
+  130  source ~/.bashrc
+  131  cd /home/ty777/python_build/Python-3.10.0
+  132  make clean
+  133  ./configure   --prefix=$HOME/.local/python-3.10   --enable-optimizations   --with-ensurepip=install   --with-sqlite3=$HOME/.local/sqlite3
+  134  make -j$(nproc)
+  135  make install
+  136  wget https://zlib.net/zlib-1.2.13.tar.gz
+  137  wget http://www.zlib.net/fossils/zlib-1.2.13.tar.gz
+  138  ls
+  139  tar -xvf zlib-1.2.13.tar.gz
+  140  cd zlib-1.2.13
+  141  ./configure --prefix=$HOME/.local/zlib
+  142  make
+  143  make install
+  144  export CPPFLAGS="-I$HOME/.local/zlib/include $CPPFLAGS"
+  145  export LDFLAGS="-L$HOME/.local/zlib/lib $LDFLAGS"
+  146  export LD_LIBRARY_PATH="$HOME/.local/zlib/lib:$LD_LIBRARY_PATH"
+  147  ./configure   --prefix=$HOME/.local/python-3.10   --enable-optimizations   --with-ensurepip=install   --with-sqlite3=$HOME/.local/sqlite3   --with-zlib=$HOME/.local/zlib   --with-openssl=$HOME/.local/openssl
+  148  ./configure   --prefix=$HOME/.local/python-3.10   --with-ensurepip=install   --with-sqlite3=$HOME/.local/sqlite3   --with-zlib=$HOME/.local/zlib   --with-openssl=$HOME/.local/openssl
+  149  ./configure   --prefix=$HOME/.local/python-3.10   --enable-optimizations   --with-ensurepip=install   --with-sqlite3=$HOME/.local/sqlite3   --with-zlib=$HOME/.local/zlib   --with-openssl=$HOME/.local/openssl
+  150  cd ..
+  151  ./configure   --prefix=$HOME/.local/python-3.10   --enable-optimizations   --with-ensurepip=install   --with-sqlite3=$HOME/.local/sqlite3   --with-zlib=$HOME/.local/zlib   --with-openssl=$HOME/.local/openssl 
+  152  make -j$(nproc)
+  153  make install
+  154  $HOME/.local/python-3.10/bin/python3.10 -c 'import sqlite3, zlib, ssl; print("All modules loaded!")'
+  155  $HOME/.local/python-3.10/bin/pip3.10 install label-studio --user
+  156  $HOME/.local/python-3.10/bin/label-studio start
+  157  label-studio 
